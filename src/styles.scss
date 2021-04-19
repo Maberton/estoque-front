@@ -2,6 +2,8 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
+@import './assets/styles/fonts';
+@import './assets/styles/variables/globals.scss';
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -12,7 +14,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$estoque-front-primary: mat-palette($mat-indigo);
+$estoque-front-primary: mat-palette($mat-purple);
 $estoque-front-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -35,5 +37,7 @@ $estoque-front-theme: mat-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
+
+* { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Montserrat', Roboto, "Helvetica Neue", sans-serif; background-color: $global-secondary}

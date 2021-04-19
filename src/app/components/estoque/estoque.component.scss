@@ -1,0 +1,73 @@
+@import 'globals';
+
+.container-home {
+  padding: 20px;
+//   width: 100vw;
+//   height: 100vh;
+
+  table {
+    width: 100%;
+    border-radius: 8px;
+
+    thead {
+      border-top-left-radius: 8px;
+    }
+
+    // margin: 20px;
+  }
+}
+
+.secao-cadastro {
+  margin-bottom: 20px;
+}
+
+.card-estoque {
+  margin-bottom: 20px;
+}
+
+.titulo-pagina {
+  margin-top: 0;
+  color: $global-primary;
+}
+
+.cadastro-estoque {
+  margin: 20px;
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: flex-start;
+//   position: relative;
+
+//   mat-form-field{
+//     &:last-of-type {
+//       margin-right: 85px;
+//     }
+//   }
+
+  button {
+    margin-right: 8px;
+  }
+
+  // ::ng-deep {
+  //   mat-form-field {
+  //     padding: 0;
+  //   }
+  // }
+}
+
+.busca {
+  width: 100%;
+  background-color: white;
+  padding: 0;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  ::ng-deep {
+    .mat-form-field-wrapper {
+      padding: 5px;
+      margin: 0;
+    }
+  }
+}
+
+.acoes-lista {
+  width: 64px;
+}
