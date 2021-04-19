@@ -1,0 +1,144 @@
+
+<div class="container-home">
+
+  <div class="row between-xs middle-xs">
+    <h1 class="titulo-pagina">ESTOQUE DE PRODUTOS</h1>
+    <h2 class="titulo-pagina">VALOR TOTAL ESTOQUE: {{totalEmProdutos | currency}}</h2>
+    <h2 class="titulo-pagina">LUCRO ESTIMADO: {{lucroTotal | currency}}</h2>
+  </div>
+
+  <mat-card class="card-estoque">
+    <form class="cadastro-estoque">
+      <div class="row">
+        <mat-form-field class="col-xs" appearance="outline">
+          <mat-label>Cód de barras</mat-label>
+          <input matInput [formControl]="codBarras" (blur)="verificaCodBarras($event.target.value)">
+        </mat-form-field>
+        <mat-form-field class="col-xs" appearance="outline">
+          <mat-label>Produto</mat-label>
+          <input type="text"
+                  matInput
+                  [formControl]="nome"
+                  [matAutocomplete]="auto"
+                  (blur)="verificaNome($event.target.value)"
+          >
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="obtemDescricaoProduto">
+            <mat-option *ngFor="let produto of produtosFiltrados | async" [value]="produto">
+              {{produto['nome']}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="col-xs" appearance="outline">
+          <mat-label>Quantidade</mat-label>
+          <input matInput [formControl]="quantidade">
+        </mat-form-field>
+
+        <mat-form-field class="col-xs" appearance="outline">
+          <mat-label>Custo</mat-label>
+          <input matInput currencyMask [formControl]="custo" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }">
+        </mat-form-field>
+
+        <mat-form-field class="col-xs" appearance="outline">
+          <mat-label>Valor de Venda</mat-label>
+          <input matInput currencyMask [formControl]="valorVenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }">
+        </mat-form-field>
+
+        <mat-form-field class="col-xs" appearance="outline">
+          <mat-label>Validade</mat-label>
+          <input matInput [formControl]="dataValidade" [textMask]="mascara">
+        </mat-form-field>
+      </div>
+      <div class="row end-xs">
+        <button mat-raised-button color="primary" (click)="gravarEstoque($event)">Cadastrar</button>
+      </div>
+
+    </form>
+  </mat-card>
+
+
+  <!-- <mat-card> -->
+    <mat-form-field appearance="outline" class="busca">
+      <mat-label>Filtrar</mat-label>
+      <input matInput (keyup)="filtrar($event)" #input>
+    </mat-form-field>
+  <!-- </mat-card> -->
+
+
+  <table mat-table [dataSource]="dados" matSort class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="quantidade">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Estoque </th>
+      <td mat-cell *matCellDef="let element"> {{element.quantidade}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Produto </th>
+      <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="dataValidade">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Validade </th>
+      <td mat-cell *matCellDef="let element"> {{element.dataValidade}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="codBarras">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cód de barras </th>
+      <td mat-cell *matCellDef="let element"> {{element.codBarras || '-'}}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="custo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Custo </th>
+      <td mat-cell *matCellDef="let element"> {{element.custo | currency}} </td>
+    </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="valorVendaSugerido">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor de Venda </th>
+        <td mat-cell *matCellDef="let element"> {{element.valorVendaSugerido | currency}} </td>
+      </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="taxaShopee">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Taxa Shopee </th>
+      <td mat-cell *matCellDef="let element"> {{element.taxaShopee | currency}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="lucroReais">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Lucro R$</th>
+      <td mat-cell *matCellDef="let element"> {{element.lucroReais | currency}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="lucroPercentual">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Lucro %</th>
+      <td mat-cell *matCellDef="let element"> {{element.lucroPercentual | number :'1.0-0'}}% </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef class="acoes-lista"></th>
+      <td mat-cell *matCellDef="let element" class="acoes-lista">
+        <button mat-icon-button color="accent" aria-label="editar estoque" (click)="editarEstoque(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  links = ['Estoque', 'Produto', 'Vendas'];
+  activeLink = this.links[0];
   title = 'estoque-front';
 }

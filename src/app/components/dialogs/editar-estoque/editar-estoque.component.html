@@ -1,0 +1,44 @@
+<h4>Editar estoque do produto:</h4>
+<h3>{{dadosEditados.nomeProduto}}</h3>
+
+<div class="cadastro-estoque">
+  <div class="row">
+    <mat-form-field class="col-xs" appearance="outline">
+      <mat-label>Cód de barras</mat-label>
+      <input matInput [(ngModel)]="dadosEditados.codBarras">
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-xs" appearance="outline">
+      <mat-label>Quantidade</mat-label>
+      <input matInput [(ngModel)]="dadosEditados.quantidade">
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-xs" appearance="outline">
+      <mat-label>Custo</mat-label>
+      <input matInput currencyMask [(ngModel)]="dadosEditados.custo" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }">
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-xs" appearance="outline">
+      <mat-label>Valor de Venda</mat-label>
+      <input matInput currencyMask [(ngModel)]="dadosEditados.valorVendaSugerido" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }">
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-xs" appearance="outline">
+      <mat-label>Validade</mat-label>
+      <input matInput [(ngModel)]="dadosEditados.dataValidade" [textMask]="mascara">
+    </mat-form-field>
+  </div>
+  <div class="row end-xs">
+    <button mat-raised-button color="basic" (click)="cancelar()">
+      CANCELAR
+    </button>
+    <button [mat-dialog-close]="dadosEditados" mat-raised-button color="primary" >
+      SALVAR
+    </button>
+  </div>
+</div>
+
